@@ -43,7 +43,7 @@ astrologyComScopes = []
 l = len(links)
 
 for i in range(l):
-  astrologyComScopes.append(str(i) + ":")
+  astrologyComScopes.append(str(i+1) + ":")
   astrologyComScopes.append(links[i])
   astrologyComScopes.append(getScopeText(links[i]))
   astrologyComScopes.append('\n')
