@@ -7,10 +7,7 @@ today = datetime.now()
 
 today = today.strftime('%m_%d_%Y')
 
-
-url = 'https://www.astrology.com/horoscope/daily/'
-
-testUrl = 'https://www.astrology.com'
+url = 'https://horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign=1'
 
 page = requests.get(url)
 
@@ -35,7 +32,7 @@ def getScopeText(url):
   return scope
 
 for l in scopeHrefs:
-  links.append(testUrl + l.attrs['href'])
+  links.append(url + l.attrs['href'])
 
 
 astrologyComScopes = []
@@ -52,8 +49,9 @@ for i in range(l):
 
 
 dir = '/Users/marty/Local Dev Projects/dinozodiac/astrohistory'
-fileName = 'astrologyCom_' + today + '.txt'
+fileName = 'hororscopecom_' + today + '.txt'
 os.chdir(dir)
+
 
 with open(fileName, 'w') as filehandle:
   filehandle.writelines("%s\n" % line for line in astrologyComScopes)
