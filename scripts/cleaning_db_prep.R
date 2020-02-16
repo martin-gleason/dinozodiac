@@ -38,8 +38,7 @@ bulk_read <- function(files = files){
   
   sign <- basename(source) %>% 
     str_remove(".html") %>% 
-    str_to_title() %>%
-    as.factor()
+    str_to_title()
   
   df <- tibble(source, date, scope, sign)
   
@@ -76,8 +75,7 @@ hscope <- function(files){
     unlist() %>% 
     str_remove(h_scope) %>% 
     str_trim() %>%
-    na.omit() %>%
-    as.factor()
+    na.omit()
   
   scope <- scope %>%
     str_remove_all(strong_date_pattern) %>%
@@ -100,16 +98,38 @@ signs_cleaned <- all_scopes$sign %>% unique()
 dino_signs <- c("Pterodactylus", "Stegosaurus", "Triceratops",
                 "Ankylosaurus", "Tyrannosaurus Rex", "Velociraptor", 
                 "Spinosaurus", "Quetzalcatlus", "Mosasaurus",
-                "Allosaurus","Rhamphorhynchus", "Brontosaurus") %>% 
-  as.factor()
-
+                "Allosaurus","Rhamphorhynchus", "Brontosaurus")
 
 
 dino_signs[4:5]
 
 matched_signs <- tibble(signs_cleaned, dino_signs) %>%
   mutate(sign_id = 1:nrow(.)) %>%
-  select(sign_id, greek_signs = signs_cleaned, dinosigns = dino_signs)
+  select(sign_id, greekname = signs_cleaned, dinoname = dino_signs)
+
+
+matched_signs %>% select(sign_id)
+
+
+url <- all_scopes$source %>% unique()
+url_id <- length(url)
+
+sources <- url %>%
+  tibble(url = .,
+         id = seq(1:url_id)) %>%
+  select(id, url)
+
+all_scopes <- all_scopes %>%
+  left_join(matched_signs, by = c("sign" = "greekname")) %>%
+  left_join(sources, by = c("source" = "url")) %>%
+  select(sourceid = id, signid = sign_id, date, horoscope = scope)
+
+
+#QA
+today <- all_scopes %>%
+  filter(date == lubridate::today())
+
+all_scopes$sign %>%unique()
 
 write_csv(matched_signs, path = "output/matched_signs.csv")
 

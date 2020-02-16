@@ -1,13 +1,13 @@
-signs_cleaned,dino_signs,sign_id
-Aries,Pterodactylus,1
-Taurus,Stegosaurus,2
-Gemini,Triceratops,3
-Cancer,Ankylosaurus,4
-Leo,Tyrannosaurus Rex,5
-Virgo,Velociraptor,6
-Libra,Spinosaurus,7
-Scorpio,Quetzalcatlus,8
-Sagittarius,Mosasaurus,9
-Capricorn,Allosaurus,10
-Aquarius,Rhamphorhynchus,11
-Pisces,Brontosaurus,12
+sign_id,greekname,dinoname
+1,Aries,Pterodactylus
+2,Taurus,Stegosaurus
+3,Gemini,Triceratops
+4,Cancer,Ankylosaurus
+5,Leo,Tyrannosaurus Rex
+6,Virgo,Velociraptor
+7,Libra,Spinosaurus
+8,Scorpio,Quetzalcatlus
+9,Sagittarius,Mosasaurus
+10,Capricorn,Allosaurus
+11,Aquarius,Rhamphorhynchus
+12,Pisces,Brontosaurus
