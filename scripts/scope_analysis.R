@@ -6,6 +6,10 @@ library(keras)
 library(here)
 library(tokenizers)
 
+min_target = 100000
+recommended = 1000000
+ideal = 2000000
+
 dz <- config::get(file = 'connections/dinozodiac.yml')
 
 con <- DBI::dbConnect(odbc::odbc(),
@@ -30,6 +34,8 @@ scopes_corpus <- scopes %>%
                       strip_non_alphanum = FALSE,
                       simplify = TRUE)
 
+print(sprintf("Corpus length: %d", length(scopes_corpus)))
+
 
 averages <- scopes %>%
   summarize(mean = mean(count),
@@ -40,4 +46,7 @@ averages <- scopes %>%
             max_char = max(char_count))
 
 
-print(sprintf("Corpus length: %d", length(scopes_text)))
+length(scopes_corpus)/min_target
+hscope_number <- min_target/averages$mean_char
+per_sign <- hscope_number * 12
+

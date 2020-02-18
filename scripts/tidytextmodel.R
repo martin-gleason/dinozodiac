@@ -34,12 +34,29 @@ chars <- scopes_text %>%
   unique() %>%
   sort()
 
-#print(sprintf("Corpus length: %d", length(scopes_text)))
-
+q
 dinoset <- map(
   seq(1, length(scopes_text) - max_length -1, by = 3),
   ~list(sentence = scopes_text[.x:(.x + max_length - 1)],
         next_char = scopes_text[.x + max_length])
 )
 
+dinoset <- transpose(dinoset)
 
+vectorize <- function(data, chars, max_length){
+  x <- array(0, dim = c(length(data$sentence), 
+                        max_length, length(chars)))
+  y <- array(0, dim = c(length(data$sentence), length(chars)))
+
+  for(i in 1:length(data$sentence)){
+    x[i,,] <- sapply(chars, function(x){
+      as.integer((x == data$sentence[[i]]))
+    })
+    y[i,] <- as.integer(chars == data$next_char[[i]])
+  }
+  
+  list(y = y,
+       x = x)
+  }
+
+vectors <- vectorize(dinoset, chars, max_length)

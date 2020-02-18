@@ -18,7 +18,7 @@ con <- DBI::dbConnect(odbc::odbc(),
 
 
 
-dbWriteTable(con, "signs", matched_signs[, 2:3], append = TRUE)
-dbWriteTable(con, "sources", sources[,2], append = TRUE)
-dbWriteTable(con, "scopes", all_scopes, append = TRUE)
+dbWriteTable(con, "signs", matched_signs, overwrite = TRUE)
+dbWriteTable(con, "sources", sources, overwrite = TRUE)
+dbWriteTable(con, "scopes", all_scopes, overwrite = TRUE)
 

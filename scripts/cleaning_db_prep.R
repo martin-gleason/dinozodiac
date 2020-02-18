@@ -8,6 +8,7 @@ paragraph_pattern <- "(?<=<p>)(.*?)(?=</p>)"
 strong_date_pattern <- "(?<=<strong>)(.*?)(?=</strong>)"
 sign_header <- "(?<=<h1>)(.*?)(?=</.*?>)"
 h_scope <- "Horoscope"
+url_site <- "^(([^:/?#]+):)?(//([^/?#]*))?"
 
 
 #create list of files function
@@ -111,18 +112,24 @@ matched_signs <- tibble(signs_cleaned, dino_signs) %>%
 matched_signs %>% select(sign_id)
 
 
-url <- all_scopes$source %>% unique()
+url <- all_scopes$source %>%
+  str_extract(url_site) %>%
+  unique()
 url_id <- length(url)
 
 sources <- url %>%
   tibble(url = .,
-         id = seq(1:url_id)) %>%
-  select(id, url)
+         sourceid = seq(1:url_id)) %>%
+  select(sourceid, url)
+
 
 all_scopes <- all_scopes %>%
-  left_join(matched_signs, by = c("sign" = "greekname")) %>%
-  left_join(sources, by = c("source" = "url")) %>%
-  select(sourceid = id, signid = sign_id, date, horoscope = scope)
+  left_join(matched_signs, by = c("sign" = "greekname"))
+
+all_scopes <- all_scopes %>%
+  mutate(source_site = str_extract(source, url_site)) %>%
+  left_join(sources, by = c("source_site" = "url")) %>%
+  select(sourceid, date, horoscope = scope, signid = sign_id)
 
 
 #QA
