@@ -23,9 +23,11 @@ try:
     cursor = connection.cursor()
     print ( connection.get_dsn_parameters(), "\n")
 
-    cursor.execute("SELECT * FROM scopes WHERE signid = 4;")
+    cursor.execute("SELECT * FROM scopes WHERE signid = 12;")
     record = cursor.fetchall()
     print("The sources are ", record, "\n So feel good!")
 
 except (Exception, psycopg2.Error) as error :
     print ("Error while connecting to PostgreSQL", error)
+
+def insert_scope()  

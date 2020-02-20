@@ -120,7 +120,7 @@ url_id <- length(url)
 sources <- url %>%
   tibble(url = .,
          sourceid = seq(1:url_id)) %>%
-  select(sourceid, url)
+  select(source_id = sourceid, url)
 
 
 all_scopes <- all_scopes %>%
@@ -129,8 +129,8 @@ all_scopes <- all_scopes %>%
 all_scopes <- all_scopes %>%
   mutate(source_site = str_extract(source, url_site)) %>%
   left_join(sources, by = c("source_site" = "url")) %>%
-  select(sourceid, date, horoscope = scope, signid = sign_id)
-
+  mutate(scope_id = 1:nrow(.)) %>%
+  select(scope_id, source_id, date, scope, sign_id)
 
 #QA
 today <- all_scopes %>%
