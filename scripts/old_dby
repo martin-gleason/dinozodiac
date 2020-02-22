@@ -16,3 +16,18 @@ def config(filename='connections/db.ini', section='postgresql'):
     raise Exception('Section {0} not found in the {1} file'.format(section, filename)
   )
   return db
+
+try:
+    params = config()
+    connection = psycopg2.connect(**params)
+    print(connection)
+
+    cursor = connection.cursor()
+    print ( connection.get_dsn_parameters(), "\n")
+
+
+
+
+
+except (Exception, psycopg2.Error) as error :
+    print ("Error while connecting to PostgreSQL", error)

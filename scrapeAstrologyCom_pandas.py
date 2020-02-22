@@ -1,5 +1,6 @@
 import requests
 import os
+import pandas as pd
 from datetime import datetime
 from bs4 import BeautifulSoup
 
@@ -38,20 +39,22 @@ for l in scopeHrefs:
   links.append(testUrl + l.attrs['href'])
 
 
+astrologyComRange = []
 astrologyComScopes = []
+
+
+
 
 l = len(links)
 
 for i in range(l):
-  astrologyComScopes.append(str(i+1) + ":")
-  astrologyComScopes.append(links[i])
+  astrologyComRange.append(links[i])
+
+
+for i in range(l):
   astrologyComScopes.append(getScopeText(links[i]))
-  astrologyComScopes.append('\n')
 
-
-dir = '/Users/marty/Local Dev Projects/dinozodiac/astrohistory'
-fileName = 'astrologyCom_' + today + '.txt'
-os.chdir(dir)
-
-with open(fileName, 'w') as filehandle:
-  filehandle.writelines("%s\n" % line for line in astrologyComScopes)
+astrologyCom = pd.DataFrame(
+    {'link': astrologyComRange,
+     'scope': astrologyComScopes
+    })
