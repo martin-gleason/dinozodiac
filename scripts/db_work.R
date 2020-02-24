@@ -19,6 +19,7 @@ con <- DBI::dbConnect(odbc::odbc(),
 
 
 dbWriteTable(con, "signs", matched_signs, overwrite = TRUE)
+dbSendQuery(con, "ALTER TABLE signs ADD PRIMARY KEY(sign_id);")
 
 dbWriteTable(con, "sources", sources, overwrite = TRUE)
 max_source_number <- dbGetQuery(con, "SELECT MAX(source_id) FROM sources;")

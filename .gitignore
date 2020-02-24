@@ -2,3 +2,5 @@
 *.code-workspace
 .Rproj.user
 dinozodiac.yml
+*.csv
+sql_alchemy.py
