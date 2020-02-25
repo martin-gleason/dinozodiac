@@ -33,6 +33,7 @@ def getScopeText(url):
   page = requests.get(url)
   soup = BeautifulSoup(page.content, 'html.parser')
   scope = soup.find('p')
+  scope = str(scope)
   return scope
 
 for l in scopeHrefs:
@@ -53,6 +54,7 @@ for i in range(l):
 
 for i in range(l):
   astrologyComScopes.append(getScopeText(links[i]))
+  str(astrologyComScopes[i])
 
 astrologyCom = pd.DataFrame(
     {'link': astrologyComRange,

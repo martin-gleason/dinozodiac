@@ -6,9 +6,8 @@ library(keras)
 library(here)
 library(tokenizers)
 
-min_target = 100000
-recommended = 1000000
-ideal = 2000000
+min_target <- 100000
+preferred <- 1000000
 
 dz <- config::get(file = 'connections/dinozodiac.yml')
 
@@ -22,12 +21,12 @@ con <- DBI::dbConnect(odbc::odbc(),
 )
 
 scopes <- dbReadTable(con, "scopes") %>%
-  select(horoscope) %>%
-  mutate(count = str_count(horoscope, "\\w+"),
-         char_count = nchar(horoscope))
+  select(scope) %>%
+  mutate(count = str_count(scope, "\\w+"),
+         char_count = nchar(scope))
 
 scopes_corpus <- scopes %>%
-  select(horoscope) %>%
+  select(scope) %>%
   pull() %>%
   str_c(collapse = " ") %>%
   tokenize_characters(lowercase = FALSE,
@@ -38,9 +37,9 @@ print(sprintf("Corpus length: %d", length(scopes_corpus)))
 
 
 averages <- scopes %>%
-  summarize(mean = mean(count),
-            min = min(count),
-            max = max(count),
+  summarize(`avg words` = mean(count),
+            `fewest words` = min(count),
+            `most words` = max(count),
             mean_char = mean(char_count),
             min_char = min(char_count),
             max_char = max(char_count))

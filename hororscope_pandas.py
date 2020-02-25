@@ -23,6 +23,7 @@ def getScopeText(url):
   page = requests.get(url)
   soup = BeautifulSoup(page.content, 'html.parser')
   scope = soup.find('p')
+  scope = str(scope)
   return scope
 
 def getHeader(url):
@@ -32,7 +33,6 @@ def getHeader(url):
   return header
 
 links = []
-
 l = 13
 
 for i in range(1, l):
@@ -47,9 +47,11 @@ for i in range(len(links)):
 
 for i in range(len(links)):
   horoscopecomScope.append(getScopeText(links[i]))
+  
  
-
-
+ #predominatly for testing purposes
+pdLinks = pd.DataFrame({'link': horoscopecomLinks})
+pdScopes = pd.DataFrame({'scope': horoscopecomScope})
 
 horoscopecom = pd.DataFrame(
     {'link': horoscopecomLinks,
