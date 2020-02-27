@@ -29,8 +29,6 @@ scopes <- dbReadTable(con, "scopes") %>%
   mutate(count = str_count(scope, "\\w+"),
          char_count = nchar(scope))
 
-glimpse(scopes)
-
 #character corpus
 scopes_corpus <- scopes %>%
   select(scope) %>%
@@ -85,3 +83,43 @@ by_sign <- function(df,...){
    return(list_of_signs)
 }
 
+all_scopes <- dino_scopes_full %>% by_sign()
+#token by word
+
+
+bing <- get_sentiments("bing")
+nrc <- get_sentiments("nrc")
+nrc_sentiments <- nrc$sentiment %>% unique()
+nrc_positive <- nrc %>%
+  filter(sentiment == "positive")
+
+nrc_joy <- nrc %>%
+  filter(sentiment == "joy")
+
+tidy_cancer <- all_scopes$Cancer %>% 
+  unnest_tokens(word, scope) %>%
+  select(date, dinoname, word) %>%
+  anti_join(stop_words)
+  
+cance_positive <-tidy_cancer %>%
+  inner_join(nrc_positive) %>%
+  count(word, sort = TRUE)
+
+cancer_joy <- tidy_cancer %>%
+  inner_join(nrc_joy) %>%
+  count(word, sort = TRUE)
+
+scope_sentiment <- dino_scopes_full %>%
+  unnest_tokens(word, scope) %>%
+  select(date, dinoname, word) %>%
+  anti_join(stop_words) %>%
+  inner_join(bing) %>%
+  count(word, dinoname, sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative)
+
+gg_scope <-scope_sentiment %>% ggplot(aes(x = dinoname, y = sentiment, color = dinoname)) +
+  geom_line(stat = "identity") +
+  theme_minimal()
+
+ggsave("output/scope_sentiment_eda.png", gg_scope)
