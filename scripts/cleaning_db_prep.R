@@ -96,25 +96,24 @@ all_scopes <- hororscope_com %>% bind_rows(astrology_com)
 
 signs_cleaned <- all_scopes$sign %>% unique()
 
-dino_signs <- c("Pterodactylus", "Stegosaurus", "Triceratops",
-                "Ankylosaurus", "Tyrannosaurus Rex", "Velociraptor", 
-                "Spinosaurus", "Quetzalcatlus", "Mosasaurus",
-                "Allosaurus","Rhamphorhynchus", "Brontosaurus")
+dino_signs <- c("Allosaurus","Triceratops","Pterodactylus",
+                "Ankylosaurus", "Tyrannosaurus Rex", "Brontosaurus", 
+                "Rhamphorhynchus", "Spinosaurus", "Velociraptor",
+               "Stegosaurus", "Quetzalcatlus", "Mosasaurus")
 
-
-dino_signs[4:5]
 
 matched_signs <- tibble(signs_cleaned, dino_signs) %>%
   mutate(sign_id = 1:nrow(.)) %>%
   select(sign_id, greekname = signs_cleaned, dinoname = dino_signs)
 
 
-matched_signs %>% select(sign_id)
+ matched_signs %>% select(sign_id)
 
 
 url <- all_scopes$source %>%
   str_extract(url_site) %>%
   unique()
+
 url_id <- length(url)
 
 sources <- url %>%
@@ -136,7 +135,7 @@ all_scopes <- all_scopes %>%
 today <- all_scopes %>%
   filter(date == lubridate::today())
 
-all_scopes$sign %>%unique()
+all_scopes$sign_id %>% unique()
 
 write_csv(matched_signs, path = "output/matched_signs.csv")
 

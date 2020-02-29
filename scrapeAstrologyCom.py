@@ -35,7 +35,7 @@ def getScopeText(url):
   return scope
 
 for l in scopeHrefs:
-  links.append(testUrl + l.attrs['href'])
+  links.append(url + l.attrs['href'])
 
 
 astrologyComScopes = []

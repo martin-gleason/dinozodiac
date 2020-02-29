@@ -5,3 +5,5 @@ dinozodiac.yml
 *.csv
 sql_alchemy.py
 scratch.*
+bazel*
+*.log

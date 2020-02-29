@@ -83,7 +83,7 @@ by_sign <- function(df,...){
    return(list_of_signs)
 }
 
-all_scopes <- dino_scopes_full %>% by_sign()
+allscopes <- dino_scopes_full %>% by_sign()
 #token by word
 
 
@@ -96,12 +96,12 @@ nrc_positive <- nrc %>%
 nrc_joy <- nrc %>%
   filter(sentiment == "joy")
 
-tidy_cancer <- all_scopes$Cancer %>% 
+tidy_cancer <- allscopes$Cancer %>% 
   unnest_tokens(word, scope) %>%
   select(date, dinoname, word) %>%
   anti_join(stop_words)
   
-cance_positive <-tidy_cancer %>%
+cancer_positive <-tidy_cancer %>%
   inner_join(nrc_positive) %>%
   count(word, sort = TRUE)
 
@@ -114,12 +114,22 @@ scope_sentiment <- dino_scopes_full %>%
   select(date, dinoname, word) %>%
   anti_join(stop_words) %>%
   inner_join(bing) %>%
+  group_by(date)%>%
   count(word, dinoname, sentiment) %>%
   spread(sentiment, n, fill = 0) %>%
   mutate(sentiment = positive - negative)
 
-gg_scope <-scope_sentiment %>% ggplot(aes(x = dinoname, y = sentiment, color = dinoname)) +
-  geom_line(stat = "identity") +
+min_sentiment <- min(scope_sentiment$sentiment)
+max(scope_sentiment$sentiment)
+
+scope_sentiment %>%
+  filter(sentiment == min_sentiment)
+
+gg_scope <-scope_sentiment %>% ggplot(aes(x = date, y = sentiment, fill = dinoname)) +
+  geom_bar(stat = "identity", aes(alpha = .5)) +
+  facet_wrap(~dinoname)+
   theme_minimal()
 
-ggsave("output/scope_sentiment_eda.png", gg_scope)
+View(scope_sentiment %>% count(word, sort = TRUE))
+
+ggsave("output/scope_sentiment_eda.png", gg_scope, width = 15, height = 8.5, units = "in")
