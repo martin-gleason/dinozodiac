@@ -6,4 +6,4 @@ dinozodiac.yml
 sql_alchemy.py
 scratch.*
 bazel*
-*.log
+*.log 

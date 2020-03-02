@@ -10,8 +10,6 @@ today = today.strftime('%m_%d_%Y')
 
 url = 'https://www.astrology.com/horoscope/daily/'
 
-testUrl = 'https://www.astrology.com'
-
 page = requests.get(url)
 
 soup = BeautifulSoup(page.content, 'html.parser')
@@ -22,11 +20,16 @@ signs = soup.findAll('div', {'class': 'signs'})
 values = [item.get('value') for item in signs]
 textSigns = [item.text for item in signs]
 
-#get the horroscopes
-scopes = soup.find(name = 'main')
-scopeHrefs = scopes.findAll('a')
+# print(signs)
 
-links = []
+# #get the horroscopes
+scopes = soup.find(name = 'main')
+scopeHrefs = scopes.find_all('a', href = True)
+
+links =[]
+for i in range(len(scopeHrefs)):
+  links.append(scopeHrefs[i].get('href'))
+
 
 def getScopeText(url):
   page = requests.get(url)
@@ -35,12 +38,13 @@ def getScopeText(url):
   return scope
 
 for l in scopeHrefs:
-  links.append(url + l.attrs['href'])
+  links.append(l.attrs['href'])
 
 
 astrologyComScopes = []
 
 l = len(links)
+
 
 for i in range(l):
   astrologyComScopes.append(str(i+1) + ":")
@@ -48,6 +52,8 @@ for i in range(l):
   astrologyComScopes.append(getScopeText(links[i]))
   astrologyComScopes.append('\n')
 
+
+print(astrologyComScopes)
 
 dir = '/Users/marty/Local Dev Projects/dinozodiac/astrohistory'
 fileName = 'astrologyCom_' + today + '.txt'

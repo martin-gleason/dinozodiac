@@ -18,7 +18,12 @@ data_files <- function(dir = "astrohistory", filename, sep = "/"){
   return(list_of_files)
 }
 
+
 files <- data_files("astrohistory", "astrologyCom*.txt")
+
+files %>% 
+  str_extract_all(pattern = url_pattern) %>%
+  unlist()
 
 bulk_read <- function(files = files){
   source <- files %>% 
