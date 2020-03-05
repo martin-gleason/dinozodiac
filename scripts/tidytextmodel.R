@@ -23,7 +23,7 @@ con <- DBI::dbConnect(odbc::odbc(),
                       Database = dz$dinozodiac$database
 )
 
-max_length <- 20
+max_length <- 10
 
 scopes_text <- dbReadTable(con, "scopes") %>%
   select(scope) %>%
@@ -139,7 +139,7 @@ iterate_model <- function(model, text, chars, max_length, diversity, vectors, it
     fit_model(model, vectors)
 
     
-    for(diversity in c(0.2, 0.5, 1)){
+    for(diversity in c(0.5, 1)){
       message(sprintf("diversity: %f ---------------\n\n", diversity))
       
       current_phrase <- 1:10 %>%
@@ -155,4 +155,11 @@ iterate_model <- function(model, text, chars, max_length, diversity, vectors, it
 
 
 model <- create_model(chars, max_length)
-iterate_model(model, scopes_text, chars, max_length, diversity, vectors, 40)
+
+interations <- iterate_model(model, scopes_text, chars, max_length, diversity, vectors, 4)
+
+capture <- tibble(diversity = rep(c(.5, .9), 5)) %>%
+                    mutate(phrase = map_chr(diversity,
+                                            ~ generate_phrase(model, text, chars, max_length, .x))) %>%
+                             arrange(diversity)
+                           
