@@ -6,6 +6,9 @@ library(tidytext)
 library(keras)
 library(here)
 library(tokenizers)
+library(tensorflow)
+reticulate::py_config()
+tensorflow::tf_config()
 
 
 #install_keras(method = "conda")

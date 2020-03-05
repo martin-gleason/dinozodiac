@@ -53,8 +53,6 @@ for i in range(l):
   astrologyComScopes.append('\n')
 
 
-print(astrologyComScopes)
-
 dir = '/Users/marty/Local Dev Projects/dinozodiac/astrohistory'
 fileName = 'astrologyCom_' + today + '.txt'
 os.chdir(dir)
