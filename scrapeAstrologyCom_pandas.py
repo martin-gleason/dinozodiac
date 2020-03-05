@@ -11,8 +11,6 @@ today = today.strftime('%m_%d_%Y')
 
 url = 'https://www.astrology.com/horoscope/daily/'
 
-testUrl = 'https://www.astrology.com'
-
 page = requests.get(url)
 
 soup = BeautifulSoup(page.content, 'html.parser')
@@ -27,7 +25,6 @@ textSigns = [item.text for item in signs]
 scopes = soup.find(name = 'main')
 scopeHrefs = scopes.findAll('a')
 
-links = []
 
 def getScopeText(url):
   page = requests.get(url)
@@ -36,8 +33,9 @@ def getScopeText(url):
   scope = str(scope)
   return scope
 
-for l in scopeHrefs:
-  links.append(testUrl + l.attrs['href'])
+links =[]
+for i in range(len(scopeHrefs)):
+  links.append(scopeHrefs[i].get('href'))
 
 
 astrologyComRange = []

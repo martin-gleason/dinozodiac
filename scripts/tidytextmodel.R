@@ -23,7 +23,7 @@ con <- DBI::dbConnect(odbc::odbc(),
                       Database = dz$dinozodiac$database
 )
 
-max_length <- 44
+max_length <- 20
 
 scopes_text <- dbReadTable(con, "scopes") %>%
   select(scope) %>%
@@ -104,7 +104,7 @@ generate_phrase <- function(model, text, chars, max_length, diversity){
   
   sentence_to_data <- function(sentence, chars){
     x <- sapply(chars, function(x){
-      as.integer(x == sentence)
+      as.numeric(as.integer(x == sentence))
       })
     array_reshape(x, c(1, dim(x)))
   }

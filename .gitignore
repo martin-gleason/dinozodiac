@@ -7,3 +7,4 @@ sql_alchemy.py
 scratch.*
 bazel*
 *.log 
+julias_code.R
