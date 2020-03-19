@@ -23,7 +23,7 @@ con <- DBI::dbConnect(odbc::odbc(),
                       Database = dz$dinozodiac$database
 )
 
-max_length <- 10
+max_length <- 20
 
 scopes_text <- dbReadTable(con, "scopes") %>%
   select(scope) %>%
@@ -158,8 +158,12 @@ model <- create_model(chars, max_length)
 
 interations <- iterate_model(model, scopes_text, chars, max_length, diversity, vectors, 4)
 
-capture <- tibble(diversity = rep(c(.5, .9), 5)) %>%
+capture <- data.frame(diversity = rep(c(.5, .9), 4)) %>%
                     mutate(phrase = map_chr(diversity,
-                                            ~ generate_phrase(model, text, chars, max_length, .x))) %>%
+                                            ~ generate_phrase(model, scopes_text, chars, max_length, .x))) %>%
                              arrange(diversity)
                            
+
+today <- format(Sys.time(), "%F")
+filename <- paste0("scopes_", today, ".csv")
+write_csv(capture, glue::glue("output/{filename}"))

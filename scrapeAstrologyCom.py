@@ -59,3 +59,4 @@ os.chdir(dir)
 
 with open(fileName, 'w') as filehandle:
   filehandle.writelines("%s\n" % line for line in astrologyComScopes)
+ 
