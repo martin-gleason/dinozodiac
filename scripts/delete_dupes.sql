@@ -1,4 +1,4 @@
-SELECT count (*)
+SELECT scopes.scope_id, s
 FROM scopes
 
 RIGHT JOIN (

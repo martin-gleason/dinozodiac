@@ -125,10 +125,13 @@ max(scope_sentiment$sentiment)
 scope_sentiment %>%
   filter(sentiment == min_sentiment)
 
-gg_scope <-scope_sentiment %>% ggplot(aes(x = date, y = sentiment, fill = dinoname)) +
+gg_scope <- scope_sentiment %>% ggplot(aes(x = date, y = sentiment, fill = dinoname)) +
   geom_bar(stat = "identity", aes(alpha = .5)) +
-  facet_wrap(~dinoname)+
-  theme_minimal()
+  facet_wrap(~dinoname) +
+  labs(x = "Date of Horoscope", y = "Sentiment Score", 
+       title = "Dinozodiac Sentiment Analysis", fill = "Dinozodiac Signs") +
+  theme_minimal() +
+  guides(alpha = FALSE)
 
 View(scope_sentiment %>% count(word, sort = TRUE))
 
