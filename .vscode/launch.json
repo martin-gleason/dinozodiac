@@ -1,15 +1,28 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  // Debug configurations for Positron / VS Code (Run and Debug panel).
   "version": "0.2.0",
   "configurations": [
-    
     {
       "name": "Python: Current File",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "dinozodiac scrape (no DB)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "dinozodiac.cli",
+      "args": ["scrape", "--archive-dir", "scratch_archive", "-v"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "pytest",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["-v"],
       "console": "integratedTerminal"
     }
   ]

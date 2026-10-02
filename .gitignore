@@ -1,10 +1,29 @@
+# Secrets
+.env
 *.ini
+connections/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+renv/library/
+renv/staging/
+
+# Editors / OS
+.DS_Store
 *.code-workspace
-.Rproj.user
-dinozodiac.yml
-*.csv
-sql_alchemy.py
+
+# Generated data and outputs (rebuild with scripts/01_parse_archive.R)
+data/processed/
+output/*.csv
+*.log
 scratch.*
-bazel*
-*.log 
-julias_code.R
