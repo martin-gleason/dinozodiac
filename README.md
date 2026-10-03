@@ -20,6 +20,7 @@ output/              Plots and generated horoscopes
 docs/specs/          What the project is (architecture)
 docs/plans/          What changed and what's next
 docs/assignments/    Learning assignments
+docs/chores/         Setup jobs (keras3 + TensorFlow install)
 ```
 
 ## Quick start
@@ -41,6 +42,9 @@ install.packages(c("tidyverse", "here", "tidytext", "tokenizers",
 testthat::test_dir("tests/testthat")   # run the tests
 source("scripts/01_parse_archive.R")   # build data/processed/*.csv
 ```
+
+**Model** (optional): keras3 + TensorFlow have their own setup.
+Follow `docs/chores/` CH-01 to CH-04, then check with `Rscript scripts/00_check_keras.R`.
 
 **Database** (optional): copy `.env.example` to `.env`, fill it in, then
 `uv run dinozodiac scrape --to-db` or `source("scripts/02_load_db.R")`. Python and R read the same `.env`.

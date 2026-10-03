@@ -13,7 +13,7 @@ then use Positron's data tools on the real horoscopes.
    - Did it find `RPostgres`, `tidytext`, and `keras3`? Look in `renv.lock`.
    - Install anything missing with `renv::install()`, then `renv::snapshot()`.
    - Answer in your notes: What goes in git (`renv.lock`, `renv/activate.R`, `.Rprofile`) and what doesn't (`renv/library/`)? Check `.gitignore` and `renv/.gitignore`.
-   - Skip `keras3` for now if TensorFlow gives you trouble. Note it as a follow-up.
+   - Skip `keras3` here. Installing it and TensorFlow is its own job: `docs/chores/` CH-01 to CH-04.
 3. **Run the tests:** `testthat::test_dir("tests/testthat")`. All should pass.
 4. **Run `scripts/01_parse_archive.R` one line at a time** (Cmd+Enter), not by sourcing it.
    - After `raw <- ...`, find `raw` in the **Variables** pane and open it in the **Data Explorer**.

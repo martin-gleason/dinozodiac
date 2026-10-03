@@ -36,3 +36,24 @@ choose_next_char <- function(preds, vocab, temperature = 1) {
   preds <- preds / sum(preds)
   vocab[which.max(stats::rmultinom(1, 1, preds))]
 }
+
+#' Point reticulate at the Python environment that has TensorFlow.
+#'
+#' `keras3::install_keras()` creates a virtualenv called "r-keras". Without this,
+#' reticulate may pick up the project's uv `.venv` (which has no TensorFlow).
+#' Set DZ_KERAS_ENV in .env to use a different environment name.
+#' Must run before anything starts Python; once Python is up it's a no-op.
+use_keras_env <- function(envname = Sys.getenv("DZ_KERAS_ENV", "r-keras")) {
+  env_file <- here::here(".env")
+  if (file.exists(env_file)) readRenviron(env_file) # before `envname` is evaluated
+  if (reticulate::py_available(initialize = FALSE)) {
+    return(invisible(FALSE))
+  }
+  if (!reticulate::virtualenv_exists(envname)) {
+    warning("Python environment '", envname, "' not found. ",
+            "See docs/chores/CH-01-install-keras-tensorflow.md", call. = FALSE)
+    return(invisible(FALSE))
+  }
+  reticulate::use_virtualenv(envname, required = TRUE)
+  invisible(TRUE)
+}

@@ -40,7 +40,8 @@ These are recoverable from git history (`git show 1fc78b9:<path>`):
 
 - Live scraping, partly. On 2026-10-02, **horoscope.com still works** (12/12 parsed). **astrology.com returns 404** for `/horoscope/daily/`, so its URL and layout have changed.
 - `02_load_db.R` and `--to-db` (no database available during the refactor).
-- `05_train_model.R` (needs a keras3 + TensorFlow install).
+- `05_train_model.R` (needs a keras3 + TensorFlow install). See chores CH-01 to CH-04.
+  `scripts/00_check_keras.R` and `tests/testthat/test-keras-backend.R` verify the install. Both are confirmed to fail or skip cleanly when keras3 is absent.
 
 ## Next
 

@@ -1,14 +1,16 @@
 # 05: Train a character-level LSTM on the horoscopes and generate new ones.
 #
-# Needs keras3 plus a Python TensorFlow backend. One-time setup in the console:
-# install the keras3 package, then run its install_keras() function.
-# Training on a CPU is slow; start with a small `max_sequences` and 1 epoch.
+# Needs keras3 plus a Python TensorFlow backend: do docs/chores/CH-01 to CH-03,
+# then confirm with scripts/00_check_keras.R before running this.
+# Training on a CPU is slow; start with a small `max_sequences` and 1 epoch (CH-04).
 library(tidyverse)
 library(tokenizers)
-library(keras3)
 library(here)
 
 source(here("R", "model_helpers.R"))
+use_keras_env() # must come before library(keras3) starts Python
+
+library(keras3)
 
 max_length    <- 20     # characters of context the model sees
 step          <- 3      # characters between window starts
